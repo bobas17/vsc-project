@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Issue</title>
+</head>
+<body>
+    <h2>Spider Net Complaint Form</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        Name: <input type="text" name="name"><br><br>
+        Issue: <input type="text" name="issue"><br><br>
+        Description: <textarea name="description"></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

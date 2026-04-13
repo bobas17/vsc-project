@@ -7,3 +7,5 @@ urlpatterns = [
     path('', views.home),
     path('complaint/', views.complaint_form),   # 👈 ADD THIS
 ]
+from customers.views import home
+path('', home),

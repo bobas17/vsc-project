@@ -1,32 +1,37 @@
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("Welcome to Spider Net 🚀")
-
-
-import requests
 from django.shortcuts import render
+from django.http import HttpResponse
 from .models import Complaint
 
+
+# 🔹 Homepage (Flask project page)
+def home(request):
+    return render(request, 'home.html')
+
+
+# 🔹 Complaint form
 def complaint_form(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         issue = request.POST.get('issue')
         desc = request.POST.get('description')
 
-        # Send data to Flask
-        response = requests.post(
-            'http://127.0.0.1:5000/analyze',
-            json={'issue': issue}
-        )
+        # ✅ Flask logic replaced inside Django
+        if issue:
+            if "no internet" in issue.lower():
+                priority = "High"
+            elif "slow" in issue.lower():
+                priority = "Medium"
+            else:
+                priority = "Low"
+        else:
+            priority = "Low"
 
-        priority = response.json().get('priority')
-
+        # Save to database
         Complaint.objects.create(
             customer_name=name,
             issue_type=issue,
             description=desc,
-            status=priority   # 👈 using Flask result
+            status=priority
         )
 
         return render(request, 'success.html')
